@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_purchase_order" model="ir.actions.report">
+        <field name="name">Partner Open Payment</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">partner_open_payment.report_invoice_from_tree</field>
+        <field name="report_file">partner_open_payment.report_invoice_from_tree</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_invoice_from_tree">
+        <t t-call="web.html_container">
+            <!--            <t t-foreach="docs" t-as="o">-->
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h1 class="text-center">Partner Open Payment Report</h1>
+                    <br/>
+                    <table style="font-weight: bold;border-collapse:separate;border-spacing:.5em;font-size: 16px;">
+                        <thead>
+                            <tr>
+                                <!-- TODO: remove in master -->
+                                <!--                            <t t-set="colspan" t-value="11"/>-->
+                                <th class="text-center">
+                                    <span>Number</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Vendor</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Bill Date</span>
+                                </th>
+                                <th>
+                                    <span>Source Document</span>
+                                </th>
+                                <th>
+                                    <span>Referance</span>
+                                </th>
+                                <!--                            <th>-->
+                                <!--                                <span>Company</span>-->
+                                <!--                            </th>-->
+                                <!--                            <th>-->
+                                <!--                                <span>Shipping Company</span>-->
+                                <!--                            </th>-->
+                                <th class="text-center">
+                                    <span>Due Date</span>
+                                </th>
+                                <th>
+                                    <span>Tax Excluded</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Total</span>
+                                </th>
+                                <th class="text-center">
+                                    <span>Amount Due</span>
+                                </th>
+
+                                <th class="text-center">
+                                    <span>Payment Status</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <t t-foreach="docs" t-as="o">
+                                <tr>
+                                    <td class="text-center">
+                                        <span t-field="o.name"/>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span t-field="o.invoice_partner_display_name"/>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span t-field="o.invoice_date"/>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span t-field="o.invoice_origin"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="o.ref"/>
+                                    </td>
+                                    <!--                                <td>-->
+                                    <!--                                    <span t-field="o.company_id"/>-->
+                                    <!--                                </td>-->
+                                    <!--                                <td>-->
+                                    <!--                                    <span t-field="o.x_studio_shipping_company"/>-->
+                                    <!--                                </td>-->
+
+                                    <td class="text-center">
+                                        <span t-field="o.invoice_date_due"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="o.amount_untaxed_signed"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="o.amount_total_signed"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="o.amount_residual_signed"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="o.payment_state"/>
+                                    </td>
+                                </tr>
+
+
+                            </t>
+
+                            <tr colspan="6">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-center">
+                                    <t t-esc="sum([o.amount_total_signed for o in docs])"/>
+                                    <!--                                    <t t-esc="sum(o.amount_total_signed) " />-->
+                                </td>
+                                <td2222222 class="text-center">
+                                    <t t-esc="sum([o.amount_residual_signed for o in docs])"/>
+
+                                </td2222222>
+                                <td></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+                <!--                <t t-set="lang"-->
+                <!--                   t-value="o.partner_id.lang"/>-->
+                <!--                <t t-call="invoice_tree.report_invoice_document_from_tree" t-lang="lang"/>-->
+                <!--            </t>-->
+            </t>
+        </t>
+    </template>
+
+</odoo>
