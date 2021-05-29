@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+
+    <record id="group_cfo_approver" model="res.groups">
+        <field name="name">CFO Approver</field>
+    </record>
+
+    <record id="group_chairman_approver" model="res.groups">
+        <field name="name">Chairman Approver</field>
+    </record>
+
+</odoo>
