@@ -5,11 +5,16 @@
     <template id="company_registry_external_layout_standard" inherit_id="web.external_layout_standard">
         <xpath expr="//div[@name='company_address']/div" position="after">
             <!--            <xpath expr="//div[hasclass('zero_min_height')]" position="after">-->
-            <div t-if="company.company_registry" class="list-inline-item d-inline">
-                <t t-esc="'Company Registry'"/>:
-                <div t-field="company.company_registry"/>
+            <t t-if="company.company_registry">
+                <strong>C.R:</strong>
+                <span class="o_force_ltr" t-field="company.company_registry"/>
+            </t>
 
-            </div>
+            <!--            <div t-if="company.company_registry" class="list-inline-item d-inline">-->
+            <!--                <t t-esc="'Company Registry'"/>:-->
+            <!--                <div t-field="company.company_registry"/>-->
+
+            <!--            </div>-->
         </xpath>
 
     </template>
@@ -17,33 +22,46 @@
 
     <template id="company_registry_external_layout_clean" inherit_id="web.external_layout_clean">
         <xpath expr="//li[@t-if='company.vat']" position="after">
-            <div t-if="company.company_registry" class="list-inline-item d-inline">
-                <t t-esc="'Company Registry'"/>:
-                <div t-field="company.company_registry"/>
+            <t t-if="company.company_registry">
+                <strong>C.R:</strong>
+                <span class="o_force_ltr" t-field="company.company_registry"/>
+            </t>
+<!--            <div t-if="company.company_registry" class="list-inline-item d-inline">-->
+<!--                <t t-esc="'Company Registry'"/>:-->
+<!--                <div t-field="company.company_registry"/>-->
 
-            </div>
+<!--            </div>-->
         </xpath>
     </template>
 
     <template id="company_registry_external_layout_boxed" inherit_id="web.external_layout_boxed">
         <xpath expr="//div[@name='company_address']" position="inside">
             <!--            <xpath expr="//div[hasclass('zero_min_height')]" position="after">-->
-            <div t-if="company.company_registry" class="list-inline-item d-inline">
-                <t t-esc="'Company Registry'"/>:
-                <div t-field="company.company_registry"/>
 
-            </div>
+             <t t-if="company.company_registry">
+                <strong>C.R:</strong>
+                <span class="o_force_ltr" t-field="company.company_registry"/>
+            </t>
+<!--            <div t-if="company.company_registry" class="list-inline-item d-inline">-->
+<!--                <t t-esc="'Company Registry'"/>:-->
+<!--                <div t-field="company.company_registry"/>-->
+
+<!--            </div>-->
         </xpath>
     </template>
 
     <template id="l10n_in_external_layout_background" inherit_id="web.external_layout_background">
         <!--            <xpath expr="//div[@name='company_address']" position="inside">-->
         <xpath expr="//div[hasclass('company_address')]/div" position="after">
-            <div t-if="company.company_registry" class="list-inline-item d-inline">
-                <t t-esc="'C.Registry'"/>:
-                <div t-field="company.company_registry"/>
+            <t t-if="company.company_registry">
+                <strong>C.R:</strong>
+                <span class="o_force_ltr" t-field="company.company_registry"/>
+            </t>
+<!--            <div t-if="company.company_registry" class="list-inline-item d-inline">-->
+<!--                <t t-esc="'C.Registry'"/>:-->
+<!--                <div t-field="company.company_registry"/>-->
 
-            </div>
+<!--            </div>-->
         </xpath>
     </template>
 </odoo>
