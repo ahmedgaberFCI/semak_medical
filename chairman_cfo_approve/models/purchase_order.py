@@ -25,8 +25,21 @@ class PurchaseOrder(models.Model):
         return super(PurchaseOrder, self)._track_subtype(init_values)
 
 
-    def button_confirm(self):
-        res = super(PurchaseOrder, self).button_confirm()
+    # def button_confirm(self):
+    #     res = super(PurchaseOrder, self).button_confirm()
+    #     if self.amount_total > 250000 and self.amount_total < 500000:
+    #         if not self.cfo_confirm:
+    #             raise ValidationError("Please, Wait CFO Approve")
+    #     if self.amount_total >= 500000:
+    #         if not self.cfo_confirm:
+    #             raise ValidationError("Please, Wait CFO Approve")
+    #         if not self.chairman_confirm:
+    #             raise ValidationError("Please, Wait Chairman Approve")
+    #     return res
+
+
+    def button_approve(self, force=False):
+        res = super(PurchaseOrder, self).button_approve()
         if self.amount_total > 250000 and self.amount_total < 500000:
             if not self.cfo_confirm:
                 raise ValidationError("Please, Wait CFO Approve")
@@ -35,5 +48,7 @@ class PurchaseOrder(models.Model):
                 raise ValidationError("Please, Wait CFO Approve")
             if not self.chairman_confirm:
                 raise ValidationError("Please, Wait Chairman Approve")
+
         return res
+
 
