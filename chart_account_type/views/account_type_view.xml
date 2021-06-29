@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="inherit_view_account_type_form_internal_group_form">
+        <field name="name">inherit.account.account.type.form</field>
+        <field name="model">account.account.type</field>
+        <field name="inherit_id" ref="account.view_account_type_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='type']" position="before">
+                <field name="internal_group"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="action_chart_account_type_form" model="ir.actions.act_window">
+        <field name="name">Chart of Accounts Types</field>
+        <field name="res_model">account.account.type</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="account.view_account_type_search"/>
+        <field name="view_id" ref="account.view_account_type_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new account Type
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem
+            action="action_chart_account_type_form"
+            id="menu_action_account_form"
+            parent="account.account_account_menu"
+            groups="account.group_account_user" sequence="2"/>
+</odoo>
