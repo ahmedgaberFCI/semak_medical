@@ -7,6 +7,7 @@
     'category': 'Accounting',
     'summary': 'Journal Sequence For Odoo 14',
     'description': 'Journal Sequence For Odoo 14',
+
     'sequence': '1',
     'author': 'Odoo Developers',
     'support': 'developersodoo@gmail.com',
