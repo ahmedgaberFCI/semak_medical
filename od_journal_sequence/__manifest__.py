@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 {
+
     'name': 'Journal Sequence For Odoo 14',
     'version': '14.0.4.1.0',
     'category': 'Accounting',
