@@ -3,7 +3,7 @@
 {
 
     'name': 'Journal Sequence For Odoo 14',
-    'version': '14.0.4.1.0',
+    'version': '14.0',
     'category': 'Accounting',
     'summary': 'Journal Sequence For Odoo 14',
     'description': 'Journal Sequence For Odoo 14',
