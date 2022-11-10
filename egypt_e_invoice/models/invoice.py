@@ -264,7 +264,7 @@ class AccountMove(models.Model):
 
             # "internalID": str(self.name) or "",
 
-            "purchaseOrderReference": self.customer_po or "",
+            "purchaseOrderReference": "",
             "purchaseOrderDescription": "",
             # "salesOrderReference": "",
             "salesOrderReference": self.name or "",
