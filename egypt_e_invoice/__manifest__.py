@@ -9,7 +9,6 @@
     "depends": ["account","uom"],
 
 
-
     "data": [
         "security/security.xml",
         "security/ir.model.access.csv",
