@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record model="ir.ui.view" id="urgent_level_tree">
+        <field name="name">urgent.level.tree</field>
+        <field name="model">urgent.level</field>
+        <field name="arch" type="xml">
+            <tree string="Urgent Level Tree">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_urgent_level_form">
+        <field name="name">urgent.level.form</field>
+        <field name="model">urgent.level</field>
+        <field name="arch" type="xml">
+            <form string="Urgent Level Form">
+
+                <sheet>
+                    <group>
+                        <field name="name" />
+
+                    </group>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_urgent_level" model="ir.actions.act_window">
+        <field name="name">Urgent Level</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">urgent.level</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="urgent_level_tree"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create Urgent Level .
+            </p>
+        </field>
+    </record>
+
+    <menuitem name="Configuration"
+              id="menu_base_purchase_request_config"
+              parent="purchase_request.parent_menu_purchase_request"
+              sequence="10"
+              groups="base.user_root"/>
+
+    <menuitem name="Urgent Level"
+              id="menu_base_urgent_level"
+              action="action_urgent_level"
+              parent="menu_base_purchase_request_config"
+              sequence="1"
+              groups="base.user_root"/>
+
+
+</odoo>

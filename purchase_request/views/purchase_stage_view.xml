@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record model="ir.ui.view" id="purchase_stage_tree">
+        <field name="name">purchase.stage.tree</field>
+        <field name="model">purchase.stage</field>
+        <field name="arch" type="xml">
+            <tree string="Purchase Stage Tree">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_purchase_stage_form">
+        <field name="name">purchase.stage.form</field>
+        <field name="model">purchase.stage</field>
+        <field name="arch" type="xml">
+            <form string="Purchase Stage Form">
+
+                <sheet>
+                    <group>
+                        <field name="name" />
+
+                    </group>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_purchase_stage" model="ir.actions.act_window">
+        <field name="name">Purchase Stage</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">purchase.stage</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="purchase_stage_tree"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create Purchase Stage.
+            </p>
+        </field>
+    </record>
+
+
+
+    <menuitem name="Purchase Request Stage"
+              id="menu_base_purchase_stage"
+              action="action_purchase_stage"
+              parent="menu_base_purchase_request_config"
+              sequence="2"
+              groups="base.user_root"/>
+
+
+</odoo>

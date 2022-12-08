@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record model="ir.ui.view" id="purchase_types_tree">
+        <field name="name">purchase.types.tree</field>
+        <field name="model">purchase.types</field>
+        <field name="arch" type="xml">
+            <tree string="Purchase Types Tree">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_purchase_types_form">
+        <field name="name">purchase.types.form</field>
+        <field name="model">purchase.types</field>
+        <field name="arch" type="xml">
+            <form string="Purchase Types Form">
+
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="checked" />
+                        <field name="budget_controller"/>
+                        <field name="mps_checked"/>
+
+                    </group>
+
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_purchase_types" model="ir.actions.act_window">
+        <field name="name">Purchase Types</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">purchase.types</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="purchase_types_tree"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create Purchase Types.
+            </p>
+        </field>
+    </record>
+
+
+
+    <menuitem name="Purchase Request Types"
+              id="menu_base_purchase_types"
+              action="action_purchase_types"
+              parent="purchase.menu_purchase_config"
+              sequence="3"
+              groups="base.user_root"/>
+
+
+</odoo>

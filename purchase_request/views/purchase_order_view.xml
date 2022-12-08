@@ -1,0 +1,99 @@
+<?xml version="1.0" ?>
+<!-- Copyright 2018-2019 ForgeFlow, S.L.
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="purchase_order_form" model="ir.ui.view">
+        <field name="name">purchase.order.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="purchase_types_id"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree" position="inside">
+                <field name="purchase_request_lines" invisible="1"/>
+                <button
+                        string="Purchase Request lines"
+                        attrs="{'invisible': [('purchase_request_lines', '=', [])]}"
+                        name="action_openRequestLineTreeView"
+                        type="object"
+                        icon="fa-folder-open-o"
+                />
+            </xpath>
+
+<!--            <xpath expr="//field[@name='order_line']/tree/field[@name='account_analytic_id']" position="replace"/>-->
+<!--            <xpath expr="//field[@name='order_line']/tree/field[@name='account_analytic_id']" position="attributes">-->
+<!--                 <attribute name="domain">[("analytic_appear", "=", True)]</attribute>-->
+<!--            </xpath>-->
+
+            <xpath expr="/form/sheet/notebook/page[1]/field[@name='notes']"
+                   position="before">
+                <group>
+                    <field name="cfo_confirm" groups="purchase_request.group_cfo_approver"/>
+
+                    <field name="chairman_confirm" groups="purchase_request.group_chairman_approver"/>
+                    <field name="budget_controller" groups="purchase_request.group_budget_controller" readonly="1"/>
+
+<!--                    <button string="Send Notification" type="object"-->
+<!--                                name="send_notificaion"-->
+<!--                                class="oe_link oe_inline"/>-->
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record id="purchase_order_line_form2" model="ir.ui.view">
+        <field name="name">purchase.order.line.form2</field>
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase.purchase_order_line_form2"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <separator string="Purchase Request Lines"/>
+                <field name="purchase_request_lines"/>
+            </field>
+<!--            <field name="account_analytic_id" position="attributes">-->
+<!--            <field name="account_analytic_id" position="attributes">-->
+<!--                <attribute name="domain">[("analytic_appear", "=", True)]</attribute>-->
+<!--            </field>-->
+        </field>
+    </record>
+    <record id="purchase_order_line_tree" model="ir.ui.view">
+        <field name="name">purchase.order.line.tree</field>
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="purchase_request_lines" invisible="1"/>
+                <button
+                        string="Purchase Request lines"
+                        attrs="{'invisible': [('purchase_request_lines', '=', [])]}"
+                        name="action_openRequestLineTreeView"
+                        type="object"
+                        icon="fa-folder-open-o"
+                />
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="tracking_cfo_chairman" model="mail.message.subtype">
+            <field name="name">Approved by CFO</field>
+            <field name="res_model">purchase.order</field>
+            <field name="default" eval="False"/>
+            <field name="description">Approved by CFO</field>
+        </record>
+
+     <record id="tracking_cfo_chairman_confirm" model="mail.message.subtype">
+            <field name="name">Approved by Chairman</field>
+            <field name="res_model">purchase.order</field>
+            <field name="default" eval="False"/>
+            <field name="description">Approved by Chairman</field>
+        </record>
+    <record id="tracking_budget_controller_confirm" model="mail.message.subtype">
+            <field name="name">Approved by Budget Controller Manager</field>
+            <field name="res_model">purchase.order</field>
+            <field name="default" eval="False"/>
+            <field name="description">Approved by Budget Controller Manager</field>
+        </record>
+</odoo>
