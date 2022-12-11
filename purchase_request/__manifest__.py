@@ -11,7 +11,6 @@
     "category": "Purchase Management",
     "depends": ["purchase", "product", "purchase_stock"],
 
-
     "data": [
         "security/purchase_request.xml",
         "security/ir.model.access.csv",
