@@ -329,8 +329,8 @@ class PurchaseRequest(models.Model):
         return self.write({"state": "to_approve"})
 
     def button_approved(self):
-        if self.department_id.for_approve and not self.sale_market_approve:
-            raise ValidationError("Please , Wait Sales & Marketing Department Approve")
+        # if self.department_id.for_approve and not self.sale_market_approve:
+        #     raise ValidationError("Please , Wait Sales & Marketing Department Approve")
 
         return self.write({"state": "approved",'approve_date':fields.Date.today()})
 
