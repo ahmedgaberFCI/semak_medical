@@ -10,7 +10,7 @@ class TestPurchaseRequestToRfq(common.TransactionCase):
         super(TestPurchaseRequestToRfq, self).setUp()
         self.purchase_request = self.env["purchase.request"]
         self.purchase_request_line = self.env["purchase.request.line"]
-        self.wiz = self.env["purchase.request.line.make.purchase.order"]
+        self.wiz = self.env["purchase.request.line.make.purchase.order"].sudo()
         self.purchase_order = self.env["purchase.order"]
         vendor = self.env["res.partner"].create({"name": "Partner #2"})
         self.service_product = self.env["product.product"].create(

@@ -1,6 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_purchase_stage,purchase.stage,model_purchase_stage,base.group_user,1,1,1,1
 access_purchase_types,purchase.types,model_purchase_types,base.group_user,1,1,1,1
+access_purchase_request_line_make_purchase_order,purchase.request.line.make.purchase.order,model_purchase_request_line_make_purchase_order,base.group_user,1,1,1,1
 access_urgent_level,urgent.level,model_urgent_level,base.group_user,1,1,1,1
 access_purchase_request_user,purchase.request,model_purchase_request,group_purchase_request_user,1,1,1,1
 access_purchase_request_manager,purchase.request,model_purchase_request,group_purchase_request_manager,1,1,1,1

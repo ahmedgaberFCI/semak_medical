@@ -13,7 +13,7 @@ class TestPurchaseRequest(TransactionCase):
         self.purchase_request_obj = self.env["purchase.request"]
         self.purchase_request_line_obj = self.env["purchase.request.line"]
         self.purchase_order = self.env["purchase.order"]
-        self.wiz = self.env["purchase.request.line.make.purchase.order"]
+        self.wiz = self.env["purchase.request.line.make.purchase.order"].sudo()
         vals = {
             "picking_type_id": self.env.ref("stock.picking_type_in").id,
             "requested_by": SUPERUSER_ID,
