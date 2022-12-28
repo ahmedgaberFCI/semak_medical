@@ -50,7 +50,7 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
         picking_type = False
         company_id = False
 
-        for line in self.env["purchase.request.line"].browse(request_line_ids):
+        for line in self.env["purchase.request.line"].sudo().browse(request_line_ids):
             if line.request_id.state == "done":
                 raise UserError(_("The purchase has already been completed."))
             if line.request_id.state != "approved":
@@ -91,7 +91,7 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
     def get_items(self, request_line_ids):
         request_line_obj = self.env["purchase.request.line"]
         items = []
-        request_lines = request_line_obj.browse(request_line_ids)
+        request_lines = request_line_obj.sudo().browse(request_line_ids)
         self._check_valid_request_line(request_line_ids)
         self.check_group(request_lines)
         for line in request_lines:
@@ -108,12 +108,12 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
         elif active_model == "purchase.request":
             request_ids = self.env.context.get("active_ids", False)
             request_line_ids += (
-                self.env[active_model].browse(request_ids).mapped("line_ids.id")
+                self.env[active_model].sudo().browse(request_ids).mapped("line_ids.id")
             )
         if not request_line_ids:
             return res
         res["item_ids"] = self.get_items(request_line_ids)
-        request_lines = self.env["purchase.request.line"].browse(request_line_ids)
+        request_lines = self.env["purchase.request.line"].sudo().browse(request_line_ids)
         supplier_ids = request_lines.mapped("supplier_id").ids
         if len(supplier_ids) == 1:
             res["supplier_id"] = supplier_ids[0]
@@ -134,8 +134,8 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
             "picking_type_id": picking_type.id,
             "company_id": company.id,
             "group_id": group_id.id,
-            "purchase_types_id": self.env['purchase.request'].browse(self.env.context.get("active_id", False)).purchase_types_id.id,
-            "budget_controller": self.env['purchase.request'].browse(self.env.context.get("active_id", False)).budget_controller,
+            "purchase_types_id": self.env['purchase.request'].sudo().browse(self.env.context.get("active_id", False)).purchase_types_id.id,
+            "budget_controller": self.env['purchase.request'].sudo().browse(self.env.context.get("active_id", False)).budget_controller,
         }
         return data
 
@@ -235,7 +235,7 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
 
     def make_purchase_order(self):
 
-        pr_obj = self.env['purchase.request'].browse(self.env.context.get("active_id", False))
+        pr_obj = self.env['purchase.request'].sudo().browse(self.env.context.get("active_id", False))
 
         # if not self.env['purchase.request'].browse(self.env.context.get("active_id", False)).budget_controller:
         if not pr_obj.budget_controller and not pr_obj.purchase_types_id.mps_checked:
@@ -271,7 +271,7 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
             # product and UoM to sum quantities instead of creating a new
             # po line
             domain = self._get_order_line_search_domain(purchase, item)
-            available_po_lines = po_line_obj.search(domain)
+            available_po_lines = po_line_obj.sudo().search(domain)
             new_pr_line = True
             # If Unit of Measure is not set, update from wizard.
             if not line.product_uom_id:
@@ -375,7 +375,7 @@ class PurchaseRequestLineMakePurchaseOrderItem(models.TransientModel):
         if self.product_id:
             name = self.product_id.name
             code = self.product_id.code
-            sup_info_id = self.env["product.supplierinfo"].search(
+            sup_info_id = self.env["product.supplierinfo"].sudo().search(
                 [
                     "|",
                     ("product_id", "=", self.product_id.id),
