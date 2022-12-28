@@ -163,7 +163,7 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
             "purchase_request_line_id": pr_line.id,
             "purchase_line_id": po_line.id,
         }
-        return self.env["purchase.request.allocation"].create(vals)
+        return self.env["purchase.request.allocation"].sudo().create(vals)
 
     @api.model
     def _prepare_purchase_order_line(self, po, item):
@@ -265,7 +265,7 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
                     line.company_id,
                     line.request_id.name,
                 )
-                purchase = purchase_obj.create(po_data)
+                purchase = purchase_obj.sudo().create(po_data)
 
             # Look for any other PO line in the selected PO with same
             # product and UoM to sum quantities instead of creating a new
@@ -291,12 +291,12 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
                     item.product_qty, alloc_uom
                 )
                 all_qty = min(po_line_product_uom_qty, wizard_product_uom_qty)
-                self.create_allocation(po_line, line, all_qty, alloc_uom)
+                self.sudo().create_allocation(po_line, line, all_qty, alloc_uom)
             else:
                 po_line_data = self._prepare_purchase_order_line(purchase, item)
                 if item.keep_description:
                     po_line_data["name"] = item.name
-                po_line = po_line_obj.create(po_line_data)
+                po_line = po_line_obj.sudo().create(po_line_data)
                 po_line_product_uom_qty = po_line.product_uom._compute_quantity(
                     po_line.product_uom_qty, alloc_uom
                 )
@@ -304,7 +304,7 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
                     item.product_qty, alloc_uom
                 )
                 all_qty = min(po_line_product_uom_qty, wizard_product_uom_qty)
-                self.create_allocation(po_line, line, all_qty, alloc_uom)
+                self.sudo().create_allocation(po_line, line, all_qty, alloc_uom)
             # TODO: Check propagate_uom compatibility:
             new_qty = pr_line_obj._calc_new_qty(
                 line, po_line=po_line, new_pr_line=new_pr_line
