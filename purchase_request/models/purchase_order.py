@@ -80,7 +80,7 @@ class PurchaseOrder(models.Model):
                     'res_partner_id': purchase.partner_id.id,
                     'notification_type': 'inbox'}))
             self.sudo().message_post(body=body, message_type='notification',
-                              subtype='mail.mt_comment', author_id=self.user_id.partner_id.id,
+                              subtype_xmlid='mail.mt_comment', author_id=self.user_id.partner_id.id,
                               notification_ids=notification_ids,partner_ids= [self.user_id.partner_id.id],)
 
 
@@ -168,7 +168,7 @@ class PurchaseOrder(models.Model):
                 message = po._purchase_request_confirm_message_content(
                     request, requests_dict[request_id]
                 )
-                request.message_post(body=message, subtype="mail.mt_comment")
+                request.message_post(body=message, subtype_xmlid='mail.mt_comment')
         return True
 
     def _purchase_request_line_check(self):
@@ -217,7 +217,7 @@ class PurchaseOrder(models.Model):
                     'res_partner_id': purchase.partner_id.id,
                     'notification_type': 'inbox'}))
             self.sudo().message_post(body=body, message_type='notification',
-                                     subtype='mail.mt_comment', author_id=self.user_id.partner_id.id,
+                                     subtype_xmlid='mail.mt_comment', author_id=self.user_id.partner_id.id,
                                      notification_ids=notification_ids, partner_ids=[self.user_id.partner_id.id], )
         return res
 
@@ -306,7 +306,7 @@ class PurchaseOrderLine(models.Model):
                     message_data
                 )
                 alloc.purchase_request_line_id.request_id.message_post(
-                    body=message, subtype="mail.mt_comment"
+                    body=message, subtype_xmlid='mail.mt_comment'
                 )
 
                 alloc.purchase_request_line_id._compute_qty()
@@ -355,7 +355,7 @@ class PurchaseOrderLine(models.Model):
                     'res_partner_id': purchase.partner_id.id,
                     'notification_type': 'inbox'}))
             self.sudo().message_post(body=body, message_type='notification',
-                                     subtype='mail.mt_comment', author_id=vals.get("user_id").partner_id.id,
+                                     subtype_xmlid='mail.mt_comment', author_id=vals.get("user_id").partner_id.id,
                                      notification_ids=notification_ids,
                                      partner_ids=[vals.get("user_id").partner_id.id], )
         prev_qty_received = {}
