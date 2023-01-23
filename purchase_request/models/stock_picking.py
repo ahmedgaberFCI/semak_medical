@@ -60,6 +60,6 @@ class StockPicking(models.Model):
                 )
                 request.sudo().message_post(
                     body=message,
-                    subtype="mail.mt_comment",
+                    subtype_xmlid="mail.mt_comment",
                     author_id=self.env.user.partner_id.id,
                 )

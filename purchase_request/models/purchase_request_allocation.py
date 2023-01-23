@@ -117,4 +117,4 @@ class PurchaseRequestAllocation(models.Model):
             po_line = allocation.purchase_line_id
             message_data = self._prepare_message_data(po_line, request, allocated_qty)
             message = self._purchase_request_confirm_done_message_content(message_data)
-            request.message_post(body=message, subtype="mail.mt_comment")
+            request.message_post(body=message, subtype_xmlid="mail.mt_comment")
