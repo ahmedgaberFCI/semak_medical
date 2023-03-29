@@ -30,6 +30,44 @@ class PurchaseOrder(models.Model):
             return self.env.ref('purchase_request.tracking_budget_controller_confirm')
         return super(PurchaseOrder, self)._track_subtype(init_values)
 
+    # def button_approve(self, force=False):
+    #     res = super(PurchaseOrder, self).button_approve()
+    #
+    #     if self.purchase_types_id.budget_controller:
+    #         print("$$$$$$$$$$$$$$")
+    #
+    #         # if self.env.user.has_group('base.group_system'):
+    #         if not self.budget_controller:
+    #             raise ValidationError("Please , Wait Budget Controller Manager Approve")
+    #
+    #     if self.purchase_types_id.checked:
+    #         print("$$$$$$$$$$$$$$")
+    #
+    #         # if self.env.user.has_group('base.group_system'):
+    #         if not self.chairman_confirm:
+    #             raise ValidationError("Please , Wait Chairman Approver")
+    #         else:
+    #             self.write({'state': 'purchase', 'date_approve': fields.Datetime.now()})
+    #             self.filtered(lambda p: p.company_id.po_lock == 'lock').write({'state': 'done'})
+    #             return {}
+    #
+    #     else:
+    #         if self.amount_total > 250000 and self.amount_total < 500000:
+    #             if not self.cfo_confirm:
+    #                 raise ValidationError("Please, Wait CFO Approve")
+    #         if self.amount_total >= 500000:
+    #             if not self.cfo_confirm:
+    #                 raise ValidationError("Please, Wait CFO Approve")
+    #             if not self.chairman_confirm:
+    #                 raise ValidationError("Please, Wait Chairman Approve")
+    #
+    #     return res
+    #     # else:
+    #     #     print("^^^^^^^^^^^^^6")
+    #     #     self.write({'state': 'purchase', 'date_approve': fields.Datetime.now()})
+    #     #     self.filtered(lambda p: p.company_id.po_lock == 'lock').write({'state': 'done'})
+    #     #     return {}
+
     def button_approve(self, force=False):
         res = super(PurchaseOrder, self).button_approve()
 
@@ -52,14 +90,25 @@ class PurchaseOrder(models.Model):
                 return {}
 
         else:
-            if self.amount_total > 250000 and self.amount_total < 500000:
-                if not self.cfo_confirm:
-                    raise ValidationError("Please, Wait CFO Approve")
-            if self.amount_total >= 500000:
-                if not self.cfo_confirm:
-                    raise ValidationError("Please, Wait CFO Approve")
-                if not self.chairman_confirm:
-                    raise ValidationError("Please, Wait Chairman Approve")
+            if self.currency_id.id == 76:
+                if self.amount_total > 250000 and self.amount_total < 500000:
+                    if not self.cfo_confirm:
+                        raise ValidationError("Please, Wait CFO Approve")
+                if self.amount_total >= 500000:
+                    if not self.cfo_confirm:
+                        raise ValidationError("Please, Wait CFO Approve")
+                    if not self.chairman_confirm:
+                        raise ValidationError("Please, Wait Chairman Approve")
+            if self.currency_id.id in [1,2]:
+                if self.amount_total > 9000 and self.amount_total < 14000:
+                    if not self.cfo_confirm:
+                        raise ValidationError("Please, Wait CFO Approve")
+                if self.amount_total >= 14000:
+                    if not self.cfo_confirm:
+                        raise ValidationError("Please, Wait CFO Approve")
+                    if not self.chairman_confirm:
+                        raise ValidationError("Please, Wait Chairman Approve")
+
 
         return res
         # else:
@@ -67,6 +116,7 @@ class PurchaseOrder(models.Model):
         #     self.write({'state': 'purchase', 'date_approve': fields.Datetime.now()})
         #     self.filtered(lambda p: p.company_id.po_lock == 'lock').write({'state': 'done'})
         #     return {}
+
 
     def send_notificaion(self):
 
