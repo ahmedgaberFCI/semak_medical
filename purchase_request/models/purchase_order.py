@@ -11,11 +11,19 @@ class PurchaseOrder(models.Model):
 
     purchase_types_id = fields.Many2one(comodel_name="purchase.types", string="PO Types", required=True)
 
-    cfo_confirm = fields.Boolean(string="CFO Confirm", tracking=True, copy=False)
+    cfo_confirm = fields.Boolean(string="Supply Chain Manager Confirm", tracking=True, copy=False)
 
     chairman_confirm = fields.Boolean(string="Chairman Confirm", tracking=True, copy=False)
 
     budget_controller = fields.Boolean(string="Budget Controller", tracking=True, copy=False)
+
+    purchase_manager_approver = fields.Boolean(string="Purchaing Manager Approver", tracking=True, copy=False)
+
+    def button_cancel(self):
+        res = super(PurchaseOrder, self).button_cancel()
+        for rec in self:
+            rec.write({'cfo_confirm': False, 'chairman_confirm': False, 'budget_controller': False,'purchase_manager_approver':False})
+        return res
 
     def _track_subtype(self, init_values):
         # OVERRIDE to log a different message when an invoice is paid using SDD.
@@ -28,6 +36,9 @@ class PurchaseOrder(models.Model):
 
         if 'budget_controller' in init_values:
             return self.env.ref('purchase_request.tracking_budget_controller_confirm')
+
+        if 'purchase_manager_approver' in init_values:
+            return self.env.ref('purchase_request.tracking_purchase_manager_approver_confirm')
         return super(PurchaseOrder, self)._track_subtype(init_values)
 
     # def button_approve(self, force=False):
@@ -70,6 +81,8 @@ class PurchaseOrder(models.Model):
 
     def button_approve(self, force=False):
         res = super(PurchaseOrder, self).button_approve()
+        if not self.purchase_manager_approver:
+            raise ValidationError("Please , Wait Purchasing Manager Approve")
 
         if self.purchase_types_id.budget_controller:
             print("$$$$$$$$$$$$$$")
@@ -91,21 +104,21 @@ class PurchaseOrder(models.Model):
 
         else:
             if self.currency_id.id == 76:
-                if self.amount_total > 250000 and self.amount_total < 500000:
+                if self.amount_total >= 1 and self.amount_total < 500000:
                     if not self.cfo_confirm:
-                        raise ValidationError("Please, Wait CFO Approve")
+                        raise ValidationError("Please, Wait Supply Chain Manager Approve")
                 if self.amount_total >= 500000:
                     if not self.cfo_confirm:
-                        raise ValidationError("Please, Wait CFO Approve")
+                        raise ValidationError("Please, Wait Supply Chain Manager Approve")
                     if not self.chairman_confirm:
                         raise ValidationError("Please, Wait Chairman Approve")
             if self.currency_id.id in [1,2]:
-                if self.amount_total > 9000 and self.amount_total < 14000:
+                if self.amount_total >= 1 and self.amount_total < 14000:
                     if not self.cfo_confirm:
-                        raise ValidationError("Please, Wait CFO Approve")
+                        raise ValidationError("Please, Wait Supply Chain Manager Approve")
                 if self.amount_total >= 14000:
                     if not self.cfo_confirm:
-                        raise ValidationError("Please, Wait CFO Approve")
+                        raise ValidationError("Please, Wait Supply Chain Manager Approve")
                     if not self.chairman_confirm:
                         raise ValidationError("Please, Wait Chairman Approve")
 

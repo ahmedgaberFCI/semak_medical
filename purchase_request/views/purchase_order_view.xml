@@ -23,22 +23,25 @@
                 />
             </xpath>
 
-<!--            <xpath expr="//field[@name='order_line']/tree/field[@name='account_analytic_id']" position="replace"/>-->
-<!--            <xpath expr="//field[@name='order_line']/tree/field[@name='account_analytic_id']" position="attributes">-->
-<!--                 <attribute name="domain">[("analytic_appear", "=", True)]</attribute>-->
-<!--            </xpath>-->
+            <!--            <xpath expr="//field[@name='order_line']/tree/field[@name='account_analytic_id']" position="replace"/>-->
+            <!--            <xpath expr="//field[@name='order_line']/tree/field[@name='account_analytic_id']" position="attributes">-->
+            <!--                 <attribute name="domain">[("analytic_appear", "=", True)]</attribute>-->
+            <!--            </xpath>-->
 
             <xpath expr="/form/sheet/notebook/page[1]/field[@name='notes']"
                    position="before">
                 <group>
+                    <field name="purchase_manager_approver"
+                           groups="purchase_request.group_purchase_manager_approver_user" readonly="0"/>
+
                     <field name="cfo_confirm" groups="purchase_request.group_cfo_approver"/>
 
                     <field name="chairman_confirm" groups="purchase_request.group_chairman_approver"/>
                     <field name="budget_controller" groups="purchase_request.group_budget_controller" readonly="1"/>
 
-<!--                    <button string="Send Notification" type="object"-->
-<!--                                name="send_notificaion"-->
-<!--                                class="oe_link oe_inline"/>-->
+                    <!--                    <button string="Send Notification" type="object"-->
+                    <!--                                name="send_notificaion"-->
+                    <!--                                class="oe_link oe_inline"/>-->
                 </group>
             </xpath>
         </field>
@@ -52,10 +55,10 @@
                 <separator string="Purchase Request Lines"/>
                 <field name="purchase_request_lines"/>
             </field>
-<!--            <field name="account_analytic_id" position="attributes">-->
-<!--            <field name="account_analytic_id" position="attributes">-->
-<!--                <attribute name="domain">[("analytic_appear", "=", True)]</attribute>-->
-<!--            </field>-->
+            <!--            <field name="account_analytic_id" position="attributes">-->
+            <!--            <field name="account_analytic_id" position="attributes">-->
+            <!--                <attribute name="domain">[("analytic_appear", "=", True)]</attribute>-->
+            <!--            </field>-->
         </field>
     </record>
     <record id="purchase_order_line_tree" model="ir.ui.view">
@@ -78,22 +81,29 @@
 
 
     <record id="tracking_cfo_chairman" model="mail.message.subtype">
-            <field name="name">Approved by CFO</field>
-            <field name="res_model">purchase.order</field>
-            <field name="default" eval="False"/>
-            <field name="description">Approved by CFO</field>
-        </record>
+        <field name="name">Approved by Supply Chain Manager</field>
+        <field name="res_model">purchase.order</field>
+        <field name="default" eval="False"/>
+        <field name="description">Approved by Supply Chain Manager</field>
+    </record>
 
-     <record id="tracking_cfo_chairman_confirm" model="mail.message.subtype">
-            <field name="name">Approved by Chairman</field>
-            <field name="res_model">purchase.order</field>
-            <field name="default" eval="False"/>
-            <field name="description">Approved by Chairman</field>
-        </record>
+    <record id="tracking_cfo_chairman_confirm" model="mail.message.subtype">
+        <field name="name">Approved by Chairman</field>
+        <field name="res_model">purchase.order</field>
+        <field name="default" eval="False"/>
+        <field name="description">Approved by Chairman</field>
+    </record>
     <record id="tracking_budget_controller_confirm" model="mail.message.subtype">
-            <field name="name">Approved by Budget Controller Manager</field>
-            <field name="res_model">purchase.order</field>
-            <field name="default" eval="False"/>
-            <field name="description">Approved by Budget Controller Manager</field>
-        </record>
+        <field name="name">Approved by Budget Controller Manager</field>
+        <field name="res_model">purchase.order</field>
+        <field name="default" eval="False"/>
+        <field name="description">Approved by Budget Controller Manager</field>
+    </record>
+
+    <record id="tracking_purchase_manager_approver_confirm" model="mail.message.subtype">
+        <field name="name">Approved by Purchasing Manager</field>
+        <field name="res_model">purchase.order</field>
+        <field name="default" eval="False"/>
+        <field name="description">Approved by Purchasing Manager</field>
+    </record>
 </odoo>
